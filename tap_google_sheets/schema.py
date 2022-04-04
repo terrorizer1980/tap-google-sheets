@@ -159,6 +159,9 @@ def get_sheet_schema_columns(sheet):
                 elif column_number_format_type == 'TEXT':
                     col_properties = {'type': ['null', 'string']}
                     column_gs_type = 'stringValue'
+                elif column_number_format_type == 'NUMBER':
+                    col_properties = {'type': ['null', 'number']}
+                    column_gs_type = 'numberType'
                 else:
                     # Interesting - order in the anyOf makes a difference.
                     # Number w/ multipleOf must be listed last, otherwise errors occur.
@@ -211,7 +214,7 @@ def get_sheet_schema_columns(sheet):
             }
             columns.append(column)
 
-            if column_gs_type in {'numberType.DATE_TIME', 'numberType.DATE', 'numberType.TIME', 'numberType'}:
+            if column_gs_type in {'numberType.DATE_TIME', 'numberType.DATE', 'numberType.TIME'}:
                 col_properties = {
                     'anyOf': [
                         col_properties,
